@@ -33,7 +33,7 @@ jobs:
     - name: Share artifact inside workflow
       uses: actions/upload-artifact@v1
       with:
-       name: Successful Build
+       name: successful-build
        path: build
 
     - name: After build
@@ -50,6 +50,12 @@ jobs:
     needs: build
 
     steps:
+    - name: Get artifact
+      uses: actions/download-artifact@v1
+      with:
+        name: successful-build
+
+
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
