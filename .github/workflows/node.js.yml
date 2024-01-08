@@ -53,7 +53,7 @@ jobs:
     - name: Get artifact
       uses: actions/download-artifact@v1
       with:
-        name: successful-build
+        name: build
 
 
     - name: Configure AWS Credentials
