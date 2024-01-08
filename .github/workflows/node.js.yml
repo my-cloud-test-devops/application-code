@@ -33,7 +33,7 @@ jobs:
     - name: Share artifact inside workflow
       uses: actions/upload-artifact@v1
       with:
-       name: successful-build
+       name: todoapp
        path: build
 
     - name: After build
@@ -53,7 +53,7 @@ jobs:
     - name: Get artifact
       uses: actions/download-artifact@v1
       with:
-        name: build
+        name: todoapp
 
 
     - name: Configure AWS Credentials
@@ -70,7 +70,7 @@ jobs:
       run: |
        pwd
        ls
-      working-directory: build
+      working-directory: todoapp
 
     - name: List Objects
       run: aws s3 ls s3://test-bucket-4343434
@@ -78,4 +78,4 @@ jobs:
 
     - name: Deploy to S3
       run: aws s3 sync . s3://test-bucket-4343434
-      working-directory: build
+      working-directory: todoapp
