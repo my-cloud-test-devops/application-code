@@ -31,7 +31,12 @@ jobs:
       run: npm run build
 
     - name: After build
-      run: ls
+      run: | 
+        ls
+        ls build
+    
+    - name: Working Directory
+      run : pwd
 
   deploy:
     runs-on: ubuntu-latest
@@ -45,6 +50,12 @@ jobs:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-east-1 # Replace with your AWS region
+        
+    - name: List Objects
+      run: ls
+
+    - name: List Objects
+      run: pwd
 
     - name: List Objects
       run: aws s3 ls s3://test-bucket-4343434
