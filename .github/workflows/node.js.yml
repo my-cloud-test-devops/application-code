@@ -42,4 +42,10 @@ jobs:
         aws-region: 'us-east-1'
 
     - name: Deploy to S3 bucket
-      run: aws s3 sync build/ s3://test-bucket-4343434/test-build/
+      run: aws s3 cp build/ s3://test-bucket-4343434/test-build/
+
+    - name: debug
+      run: pwd
+
+    - name: debugf
+      run: ls
