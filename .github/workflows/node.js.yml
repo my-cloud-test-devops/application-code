@@ -1,44 +1,45 @@
-name: Node.js CI
+name: Build and Deploy to S3
 
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    branches:
+      - main  # Change this to your main branch name
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [18.x]
-
     steps:
-    - name: Checkout repository
+    - name: Checkout Repository
       uses: actions/checkout@v2
 
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
       with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
+        node-version: 14
 
-    - name: Install dependencies
-      run: npm ci
+    - name: Install Dependencies
+      run: npm install
 
-    - name: Build
-      run: npm run build --if-present
+    - name: Build React App
+      run: npm run build
 
-    - name: Install AWS CLI
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y awscli
+  deploy:
+    runs-on: ubuntu-latest
 
-    - name: Copy to S3
-      run: |
-        aws s3 cp build/ s3://test-bucket-4343434/test-build/ --recursive
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    needs: build
+
+    steps:
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1 # Replace with your AWS region
+
+    - name: List Objects
+      run: aws s3 ls s3://test-bucket-4343434
+    
+
+    - name: Deploy to S3
+      run: aws s3 sync build/ s3://test-bucket-4343434
