@@ -20,7 +20,7 @@ function App() {
     }
   };
 
-  const apiUrl = 'http://54.227.217.179:8080'
+  const apiUrl = 'http://localhost:8080'
 
   const addTodo = async () => {
     handleCharactersError(todo);
