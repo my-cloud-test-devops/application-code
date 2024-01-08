@@ -30,6 +30,12 @@ jobs:
     - name: Build React App
       run: npm run build
 
+    - name: Share artifact inside workflow
+      uses: actions/upload-artifact@v1
+      with:
+       name: react-github-actions-build
+       path: build
+
     - name: After build
       run: | 
         ls
@@ -53,9 +59,11 @@ jobs:
         
     - name: List Objects
       run: ls
+      working-directory: react-github-actions-build
 
     - name: List Objects
       run: pwd
+      working-directory: react-github-actions-build
 
     - name: List Objects
       run: aws s3 ls s3://test-bucket-4343434
@@ -63,3 +71,4 @@ jobs:
 
     - name: Deploy to S3
       run: aws s3 sync . s3://test-bucket-4343434
+      working-directory: react-github-actions-build
