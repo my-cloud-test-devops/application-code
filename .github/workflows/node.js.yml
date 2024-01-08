@@ -59,11 +59,12 @@ jobs:
         
     - name: List Objects
       run: ls
-      working-directory: application-code
 
     - name: List Objects
-      run: pwd
-      working-directory: application-code
+      run: |
+       pwd
+       ls
+      working-directory: build
 
     - name: List Objects
       run: aws s3 ls s3://test-bucket-4343434
@@ -71,4 +72,4 @@ jobs:
 
     - name: Deploy to S3
       run: aws s3 sync . s3://test-bucket-4343434
-      working-directory: application-code
+      working-directory: build
