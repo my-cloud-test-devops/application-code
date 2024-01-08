@@ -18,11 +18,20 @@ jobs:
       with:
         node-version: 14
 
+    - name: Before Install
+      run: ls
+
     - name: Install Dependencies
       run: npm install
 
+    - name: After Install
+      run: ls
+
     - name: Build React App
       run: npm run build
+
+    - name: After build
+      run: ls
 
   deploy:
     runs-on: ubuntu-latest
@@ -42,4 +51,4 @@ jobs:
     
 
     - name: Deploy to S3
-      run: aws s3 sync build/ s3://test-bucket-4343434
+      run: aws s3 sync . s3://test-bucket-4343434
