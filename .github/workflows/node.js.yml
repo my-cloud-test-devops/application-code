@@ -52,5 +52,5 @@ jobs:
         aws-region: us-east-1 # Replace with your AWS region
 
     - name: Deploy to S3
-      run: aws s3 sync . s3://test-bucket-4343434/client
+      run: aws s3 sync . s3://${{ secrets.S3_BUCKET_NAME }}/client/build
       working-directory: todoapp
