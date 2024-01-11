@@ -20,7 +20,7 @@ function App() {
     }
   };
 
-  const apiUrl = 'http://demo-alb-470743486.us-east-1.elb.amazonaws.com:8080'
+  const apiUrl = 'http://demo-alb-1122803345.us-east-1.elb.amazonaws.com:8080'
 
   const addTodo = async () => {
     handleCharactersError(todo);
